@@ -21,10 +21,10 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
+    if (!this.isModified('passwordHash')) return next();
 
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.passwordHash = await bcrypt.hash(this.passwordHash, salt);
 });
 
 userSchema.index({ id: 1, email: 1 });  // Para no utilizar el _id de MongoDB por seguridad
