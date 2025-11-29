@@ -26,7 +26,7 @@ router.post('/signup', async (req, res) => {
             role: user.role,
         }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.header('Authorization', token).send({
+        res.status(201).header('Authorization', token).send({
           user: {
             name: user.name,
             email: user.email,

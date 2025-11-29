@@ -13,7 +13,7 @@ export default function paginate(model) {
                 .skip(skip)
                 .limit(pageSize)
                 .exec();
-            results.page = matchMedia.ceil(results.total / pageSize);
+            results.page = Math.ceil(results.total / pageSize);
             results.currentPage = page;
             res.paginatedResults = results;
             next();
