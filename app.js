@@ -4,6 +4,7 @@ import express from 'express';
 import morgan from 'morgan';
 import usersRoutes from './routes/usersRoutes.js';
 import ticketsRoutes from './routes/ticketsRoutes.js';
+import error from './middlewares/error.js';
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRoutes);
 app.use('/api/tickets', ticketsRoutes);
+app.use(error);  // Error handling middleware
 
 export default app;
