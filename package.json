@@ -7,14 +7,19 @@
   "scripts": {
     "start": "NODE_ENV=prod node server.js",
     "dev": "NODE_ENV=dev node --watch server.js",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "db:populate": "node scripts/populateDB.js"
   },
   "author": "Emiliano-Blackbird (https://github.com/Emiliano-Blackbird)",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "uuid": "^13.0.0",
