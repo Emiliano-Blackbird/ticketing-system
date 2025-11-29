@@ -1,6 +1,7 @@
 POST http://localhost:4000/api/tickets HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTI4YmE5MmQxMmQ2YzY4ZTEwMTc0ODUiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDM3Nzc4MCwiZXhwIjoxNzY0MzgxMzgwfQ.wZPEydNHAWDLHrGtGPoob-FCai8nlsQxLnKSbEdNzIA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTI4YmE5MmQxMmQ2YzY4ZTEwMTc0ODUiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDQ1MDk0NCwiZXhwIjoxNzY0NDU0NTQ0fQ.GmmTHiwYS7ktAV0zuqzaqNbttTIbeLA0ePUBWc1XcL4
+
 
 {
     "title": "Sample Ticket nº8",
