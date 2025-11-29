@@ -2,28 +2,25 @@ import express from 'express';
 import Ticket from '../models/Tickets.js';
 import auth from '../middlewares/auth.js';
 import admin from '../middlewares/admin.js';
+import buildFilter from '../middlewares/filter.js';
+import paginate from '../middlewares/paginate.js';
 
 const router = express.Router();
 
-//  GET /api/tickets?page=1&pageSize=10
-router.get('/', async (req, res) => {
-    const pageSize = parseInt(req.query.pageSize) || 10;
-    const page = parseInt(req.query.page) || 1;
-
-    try {
-        const tickets = await Ticket.find()
-            .skip((page - 1) * pageSize)
-            .limit(pageSize);
-
-        const total = await Ticket.countDocuments();
-
-        res.status(200).json({tickets, page, pages: Math.ceil(total / pageSize), currentPage: page });
-    } catch (error) {
-        res.status(500).send({ message: "Server error" + error.message });
-    }
+//  GET all tickets with filtering and pagination
+//  GET /api/tickets
+//  GET /api/tickets?pageSize=10&page=1
+//  GET /api/tickets?status=open&priority=high
+//  GET /api/tickets?search=bug
+//  Public because I don't put auth middleware
+router.get('/', buildFilter, paginate(Ticket), async (req, res) => {
+    res.status(200).json(res.paginatedResults);
 });
 
+//  Create a ticket
 //  POST /api/tickets
+//  Private (only logged in users can create tickets)
+//  Ticket Schema: title, description, priority, status
 router.post('/', auth, async (req, res) => {
     const ticket = new Ticket({
         user: req.user._id,
@@ -41,7 +38,9 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
+//  Get a ticket by uid
 //  GET /api/tickets/:id
+//  Public
 router.get('/:id', async (req, res) => {
     try {
         const ticket = await Ticket.findOne({ id: req.params.id });
@@ -54,7 +53,10 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+//  Update a ticket by uid
 //  PUT /api/tickets/:id
+//  Private (only logged in users can update tickets)
+//  Ticket Schema: title, description, priority, status
 router.put('/:id', auth, async (req, res) => {  // Updated to use auth middleware
     const updates = req.body;
     try {
@@ -68,7 +70,9 @@ router.put('/:id', auth, async (req, res) => {  // Updated to use auth middlewar
     }
 });
 
+//  Delete a ticket by uid
 //  DELETE /api/tickets/:id
+//  Private (only admin users can delete tickets)
 router.delete('/:id', [auth, admin], async (req, res) => {
     try {
         const ticket = await Ticket.findOneAndDelete({ id: req.params.id });
